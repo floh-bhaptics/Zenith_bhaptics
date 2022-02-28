@@ -149,7 +149,7 @@ namespace Zenith_bhaptics
         {
             public static void Postfix(CombatSystem __instance, Zenith.Combat.CombatHittableCollider hittable, Vector3 position, CombatHitType types, string itemInstanceId, string attackingObjectId, CombatAttackData __result)
             {
-                tactsuitVr.LOG("Attacked: " + __result.Defender.Id.ToString() + " " + __instance.entityId.Id.ToString() + " " + hittable.);
+                tactsuitVr.LOG("Attacked: " + __result.Defender.Id.ToString() + " " + __instance.entityId.Id.ToString());
                 if (__result.Defender.Id != __instance.entityId.Id) return;
                 if (hittable.combatSystem == __instance) return;
                 if (types == CombatHitType.PLAYER_ORIGINATED) return;
