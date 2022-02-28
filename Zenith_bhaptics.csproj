@@ -78,8 +78,59 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MyBhapticsTactsuit.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Zenith_bhaptics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Patterns\BladeHit.tact" />
+    <None Include="Patterns\BulletHit.tact" />
+    <None Include="Patterns\Eating.tact" />
+    <None Include="Patterns\ExplosionBelly.tact" />
+    <None Include="Patterns\FlyingMedium.tact" />
+    <None Include="Patterns\Flying\FlyingAir_Back01.tact" />
+    <None Include="Patterns\Flying\FlyingAir_Back02.tact" />
+    <None Include="Patterns\Flying\FlyingAir_Back03.tact" />
+    <None Include="Patterns\Flying\FlyingAir_Back04.tact" />
+    <None Include="Patterns\Flying\FlyingAir_Back05.tact" />
+    <None Include="Patterns\Flying\FlyingAir_Back06.tact" />
+    <None Include="Patterns\Flying\FlyingAir_Back07.tact" />
+    <None Include="Patterns\Flying\FlyingAir_Back08.tact" />
+    <None Include="Patterns\Flying\FlyingAir_Front01.tact" />
+    <None Include="Patterns\Flying\FlyingAir_Front02.tact" />
+    <None Include="Patterns\Flying\FlyingAir_Front03.tact" />
+    <None Include="Patterns\Flying\FlyingAir_Front04.tact" />
+    <None Include="Patterns\Flying\FlyingAir_Front05.tact" />
+    <None Include="Patterns\Flying\FlyingAir_Front06.tact" />
+    <None Include="Patterns\Flying\FlyingAir_Front07.tact" />
+    <None Include="Patterns\Flying\FlyingAir_Front08.tact" />
+    <None Include="Patterns\Headshot_B.tact" />
+    <None Include="Patterns\Headshot_F.tact" />
+    <None Include="Patterns\Headshot_L.tact" />
+    <None Include="Patterns\Headshot_R.tact" />
+    <None Include="Patterns\Healing.tact" />
+    <None Include="Patterns\HeartBeat.tact" />
+    <None Include="Patterns\Holster_L.tact" />
+    <None Include="Patterns\Holster_R.tact" />
+    <None Include="Patterns\Impact.tact" />
+    <None Include="Patterns\RecoilArms_L.tact" />
+    <None Include="Patterns\RecoilArms_R.tact" />
+    <None Include="Patterns\RecoilBladeVest_L.tact" />
+    <None Include="Patterns\RecoilBladeVest_R.tact" />
+    <None Include="Patterns\RecoilBowVest_L.tact" />
+    <None Include="Patterns\RecoilBowVest_R.tact" />
+    <None Include="Patterns\RecoilHands_L.tact" />
+    <None Include="Patterns\RecoilHands_R.tact" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

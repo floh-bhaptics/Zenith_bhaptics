@@ -10,6 +10,8 @@ using HarmonyLib;
 using UnityEngine;
 using MyBhapticsTactsuit;
 
+using Zenith;
+
 
 
 namespace Zenith_bhaptics
@@ -37,5 +39,24 @@ namespace Zenith_bhaptics
             var harmony = new Harmony("bhaptics.patch.zenith");
             harmony.PatchAll();
         }
+
+        [HarmonyPatch(typeof(Zenith.Locomotion.ZenithGlidingProvider), "BeginGliding", new Type[] { })]
+        public class StartGliding
+        {
+            public static void Postfix()
+            {
+                tactsuitVr.StartGliding();
+            }
+        }
+
+        [HarmonyPatch(typeof(Zenith.Locomotion.ZenithGlidingProvider), "EndGliding", new Type[] { })]
+        public class EndGliding
+        {
+            public static void Postfix()
+            {
+                tactsuitVr.StopGliding();
+            }
+        }
+
     }
 }

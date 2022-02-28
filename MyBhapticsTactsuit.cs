@@ -10,6 +10,11 @@ using BepInEx;
 using Zenith_bhaptics;
 using System.Runtime.InteropServices;
 
+using System.Resources;
+using System.Globalization;
+using System.Collections;
+
+
 namespace MyBhapticsTactsuit
 {
 
@@ -19,8 +24,18 @@ namespace MyBhapticsTactsuit
         public bool systemInitialized = false;
         // Event to start and stop the heartbeat thread
         private static ManualResetEvent HeartBeat_mrse = new ManualResetEvent(false);
+        private static ManualResetEvent Gliding_mrse = new ManualResetEvent(false);
+        // List of flying patterns
+        private static List<String> FlyingFront = new List<string> { };
+        private static List<String> FlyingBack = new List<string> { };
+        // Random numbers for flying
+        private static Random flyRandom = new Random();
+        private static int patternFront;
+        private static int patternBack;
+        private static int flyPause;
+        private static float flyIntensity;
         // dictionary of all feedback patterns found in the bHaptics directory
-        public Dictionary<String, FileInfo> FeedbackMap = new Dictionary<String, FileInfo>();
+        public Dictionary<String, String> FeedbackMap = new Dictionary<String, String>();
 
 #pragma warning disable CS0618 // remove warning that the C# library is deprecated
         public HapticPlayer hapticPlayer;
@@ -36,6 +51,22 @@ namespace MyBhapticsTactsuit
                 HeartBeat_mrse.WaitOne();
                 PlaybackHaptics("HeartBeat");
                 Thread.Sleep(1000);
+            }
+        }
+
+        public void GlidingFunc()
+        {
+            while (true)
+            {
+                // Check if reset event is active
+                Gliding_mrse.WaitOne();
+                patternFront = flyRandom.Next(FlyingFront.Count);
+                patternBack = flyRandom.Next(FlyingBack.Count);
+                flyPause = flyRandom.Next(300);
+                flyIntensity = (float)flyRandom.NextDouble();
+                PlaybackHaptics(FlyingFront[patternFront], flyIntensity);
+                PlaybackHaptics(FlyingBack[patternBack], flyIntensity);
+                Thread.Sleep(flyPause);
             }
         }
 
@@ -55,6 +86,8 @@ namespace MyBhapticsTactsuit
             LOG("Starting HeartBeat thread...");
             Thread HeartBeatThread = new Thread(HeartBeatFunc);
             HeartBeatThread.Start();
+            Thread GlidingThread = new Thread(GlidingFunc);
+            GlidingThread.Start();
         }
 
         public void LOG(string logStr)
@@ -66,6 +99,7 @@ namespace MyBhapticsTactsuit
         void RegisterAllTactFiles()
         {
             if (suitDisabled) { return; }
+            /*
             // Get location of the compiled assembly and search through "bHaptics" directory and contained patterns
             string assemblyFile = Assembly.GetExecutingAssembly().Location;
             string myPath = Path.GetDirectoryName(assemblyFile);
@@ -89,24 +123,31 @@ namespace MyBhapticsTactsuit
                 catch (Exception e) { LOG(e.ToString()); }
 
                 FeedbackMap.Add(prefix, Files[i]);
-
-                // tried to only save right side pattern and submit reflected version for left side,
-                // but it somehow didn't work.
-                /*
-                if (prefix.EndsWith("_R"))
-                {
-                    string otherPrefix = prefix.Remove(prefix.Length - 2) + "_L";
-                    try
-                    {
-                        hapticPlayer.RegisterTactFileStrReflected(otherPrefix, tactFileStr);
-                        LOG("Pattern registered: " + otherPrefix);
-                    }
-                    catch (Exception e) { LOG(e.ToString()); }
-                    
-                    FeedbackMap.Add(otherPrefix, Files[i]);
-                }
-                */
             }
+            */
+            ResourceSet resourceSet = Zenith_bhaptics.Properties.Resources.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, true, true);
+
+            foreach (DictionaryEntry dict in resourceSet)
+            {
+                try
+                {
+                    hapticPlayer.RegisterTactFileStr(dict.Key.ToString(), dict.Value.ToString());
+                    LOG("Pattern registered: " + dict.Key.ToString());
+                    FeedbackMap.Add(dict.Key.ToString(), dict.Value.ToString());
+                }
+                catch (Exception e) { LOG(e.ToString()); continue; }
+
+                if (dict.Key.ToString().StartsWith("FlyingAir_Back"))
+                {
+                    FlyingBack.Add(dict.Key.ToString());
+                }
+                if (dict.Key.ToString().StartsWith("FlyingAir_Front"))
+                {
+                    FlyingFront.Add(dict.Key.ToString());
+                }
+
+            }
+
             systemInitialized = true;
         }
 
@@ -207,6 +248,17 @@ namespace MyBhapticsTactsuit
         public void StopHeartBeat()
         {
             HeartBeat_mrse.Reset();
+        }
+
+        public void StartGliding()
+        {
+            Gliding_mrse.Set();
+        }
+
+        public void StopGliding()
+        {
+            Gliding_mrse.Reset();
+            hapticPlayer.TurnOff("FlyingMedium");
         }
 
         public void StopHapticFeedback(String effect)
