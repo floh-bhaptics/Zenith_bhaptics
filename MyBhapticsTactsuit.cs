@@ -280,6 +280,7 @@ namespace MyBhapticsTactsuit
         public void StopThreads()
         {
             StopHeartBeat();
+            StopGliding();
         }
 
 

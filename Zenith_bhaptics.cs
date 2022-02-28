@@ -23,10 +23,6 @@ namespace Zenith_bhaptics
         internal static new ManualLogSource Log;
 #pragma warning restore CS0109
         public static TactsuitVR tactsuitVr;
-        public static Vector3 playerPosition;
-        // I couldn't find a way to read out the max health. So this is a global variable hack that
-        // will just store the maximum health ever read.
-        public static float maxHealth = 0f;
 
         public override void Load()
         {
@@ -39,6 +35,8 @@ namespace Zenith_bhaptics
             var harmony = new Harmony("bhaptics.patch.zenith");
             harmony.PatchAll();
         }
+
+        #region World Interaction
 
         [HarmonyPatch(typeof(Zenith.Locomotion.ZenithGlidingProvider), "BeginGliding", new Type[] { })]
         public class StartGliding
@@ -55,44 +53,6 @@ namespace Zenith_bhaptics
             public static void Postfix()
             {
                 tactsuitVr.StopGliding();
-            }
-        }
-
-        [HarmonyPatch(typeof(Zenith.ClientHapticsSystem), "PlayHaptics", new Type[] { typeof(RGBSchemes.AbsoluteHaptics.Event) })]
-        public class MeleeHit
-        {
-            public static void Postfix(Zenith.Combat.MeleeWeapon __instance, RGBSchemes.AbsoluteHaptics.Event hapticEvent)
-            {
-                tactsuitVr.LOG("PlayHaptics: " + hapticEvent.ToString());
-                switch (hapticEvent)
-                {
-                    case RGBSchemes.AbsoluteHaptics.Event.PlayerAttackEnemyLeft:
-                        tactsuitVr.SwordRecoil(false);
-                        break;
-
-                    case RGBSchemes.AbsoluteHaptics.Event.PlayerAttackEnemyRight:
-                        tactsuitVr.SwordRecoil(true);
-                        break;
-
-                    case RGBSchemes.AbsoluteHaptics.Event.PlayerParryEnemyLeft:
-                        tactsuitVr.SwordRecoil(false);
-                        break;
-
-                    case RGBSchemes.AbsoluteHaptics.Event.PlayerParryEnemyRight:
-                        tactsuitVr.SwordRecoil(true);
-                        break;
-
-                    case RGBSchemes.AbsoluteHaptics.Event.EnemyAttackPlayerLeft:
-                        tactsuitVr.LOG("Player attacked left");
-                        break;
-
-                    case RGBSchemes.AbsoluteHaptics.Event.EnemyAttackPlayerRight:
-                        tactsuitVr.LOG("Player attacked right");
-                        break;
-
-                    default:
-                        return;
-                }
             }
         }
 
@@ -114,6 +74,10 @@ namespace Zenith_bhaptics
             }
         }
 
+        #endregion
+
+        #region Health
+
         [HarmonyPatch(typeof(Zenith.UI.ZenithVignetteManager), "OnHealthChanged", new Type[] { typeof(int) })]
         public class PlayerHealthChanged
         {
@@ -125,6 +89,19 @@ namespace Zenith_bhaptics
                 else tactsuitVr.StopHeartBeat();
             }
         }
+
+        [HarmonyPatch(typeof(PlayerCharacterHealthSystem), "OnDeath", new Type[] {  })]
+        public class PlayerDeath
+        {
+            public static void Postfix()
+            {
+                tactsuitVr.StopThreads();
+            }
+        }
+
+        #endregion
+
+        #region Combat
 
         [HarmonyPatch(typeof(Zenith.Combat.MeleeWeapon), "HitHittable", new Type[] { typeof(Zenith.Combat.CombatHittableCollider) })]
         public class MeleeHitHittable
@@ -144,22 +121,71 @@ namespace Zenith_bhaptics
             }
         }
 
+        private static KeyValuePair<float, float> getAngleAndShift(Transform player, Vector3 hit)
+        {
+            // bhaptics pattern starts in the front, then rotates to the left. 0° is front, 90° is left, 270° is right.
+            // y is "up", z is "forward" in local coordinates
+            Vector3 patternOrigin = new Vector3(0f, 0f, 1f);
+            Vector3 hitPosition = hit - player.position;
+            Quaternion myPlayerRotation = player.rotation;
+            Vector3 playerDir = myPlayerRotation.eulerAngles;
+            // get rid of the up/down component to analyze xz-rotation
+            Vector3 flattenedHit = new Vector3(hitPosition.x, 0f, hitPosition.z);
+
+            // get angle. .Net < 4.0 does not have a "SignedAngle" function...
+            float hitAngle = Vector3.Angle(flattenedHit, patternOrigin);
+            // check if cross product points up or down, to make signed angle myself
+            Vector3 crossProduct = Vector3.Cross(flattenedHit, patternOrigin);
+            if (crossProduct.y > 0f) { hitAngle *= -1f; }
+            // relative to player direction
+            float myRotation = hitAngle - playerDir.y;
+            // switch directions (bhaptics angles are in mathematically negative direction)
+            myRotation *= -1f;
+            // convert signed angle into [0, 360] rotation
+            if (myRotation < 0f) { myRotation = 360f + myRotation; }
+
+
+            // up/down shift is in y-direction
+            // in Shadow Legend, the torso Transform has y=0 at the neck,
+            // and the torso ends at roughly -0.5 (that's in meters)
+            // so cap the shift to [-0.5, 0]...
+            float hitShift = hitPosition.y;
+            tactsuitVr.LOG("HitShift: " + hitShift.ToString());
+            float upperBound = 0.0f;
+            float lowerBound = -0.5f;
+            if (hitShift > upperBound) { hitShift = 0.5f; }
+            else if (hitShift < lowerBound) { hitShift = -0.5f; }
+            // ...and then spread/shift it to [-0.5, 0.5]
+            else { hitShift = (hitShift - lowerBound) / (upperBound - lowerBound) - 0.5f; }
+
+            //tactsuitVr.LOG("Relative x-z-position: " + relativeHitDir.x.ToString() + " "  + relativeHitDir.z.ToString());
+            //tactsuitVr.LOG("HitAngle: " + hitAngle.ToString());
+            //tactsuitVr.LOG("HitShift: " + hitShift.ToString());
+
+            // No tuple returns available in .NET < 4.0, so this is the easiest quickfix
+            return new KeyValuePair<float, float>(myRotation, hitShift);
+        }
+
         [HarmonyPatch(typeof(CombatSystem), "Attack", new Type[] { typeof(Zenith.Combat.CombatHittableCollider), typeof(float), typeof(string), typeof(CombatHitType), typeof(Vector3), typeof(Vector3), typeof(bool), typeof(bool), typeof(string) })]
         public class PlayerAttack
         {
             public static void Postfix(CombatSystem __instance, Zenith.Combat.CombatHittableCollider hittable, Vector3 position, CombatHitType types, string itemInstanceId, string attackingObjectId, CombatAttackData __result)
             {
-                tactsuitVr.LOG("Attacked: " + __result.Defender.Id.ToString() + " " + __instance.entityId.Id.ToString());
-                if (__result.Defender.Id != __instance.entityId.Id) return;
-                if (hittable.combatSystem == __instance) return;
+                if (!__instance.tempIsEnemy) return;
                 if (types == CombatHitType.PLAYER_ORIGINATED) return;
                 if (types == CombatHitType.NONE) return;
                 string feedBack = "Impact";
                 if (types == CombatHitType.MELEE) feedBack = "BladeHit";
                 if (types == CombatHitType.RANGED) feedBack = "BulletHit";
+                var angleShift = getAngleAndShift(__instance.transform, position);
+                tactsuitVr.PlayBackHit(feedBack, angleShift.Key, angleShift.Value);
+
                 //tactsuitVr.LOG("Hit: " + __instance.transform.position.x.ToString() + " " + __instance.transform.position.z.ToString() + " " + position.x.ToString() + " " + position.z.ToString());
-                tactsuitVr.PlaybackHaptics(feedBack);
+                //tactsuitVr.PlaybackHaptics(feedBack);
             }
         }
+
+        #endregion
+
     }
 }
