@@ -151,8 +151,8 @@ namespace Zenith_bhaptics
             // so cap the shift to [-0.5, 0]...
             float hitShift = hitPosition.y;
             tactsuitVr.LOG("HitShift: " + hitShift.ToString());
-            float upperBound = 0.0f;
-            float lowerBound = -0.5f;
+            float upperBound = 1.7f;
+            float lowerBound = 0.8f;
             if (hitShift > upperBound) { hitShift = 0.5f; }
             else if (hitShift < lowerBound) { hitShift = -0.5f; }
             // ...and then spread/shift it to [-0.5, 0.5]
