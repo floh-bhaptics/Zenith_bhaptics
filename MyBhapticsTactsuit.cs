@@ -63,7 +63,7 @@ namespace MyBhapticsTactsuit
                 patternFront = flyRandom.Next(FlyingFront.Count);
                 patternBack = flyRandom.Next(FlyingBack.Count);
                 flyPause = flyRandom.Next(300);
-                flyIntensity = (float)flyRandom.NextDouble();
+                flyIntensity = (float)flyRandom.NextDouble() * 0.8f;
                 PlaybackHaptics(FlyingFront[patternFront], flyIntensity);
                 PlaybackHaptics(FlyingBack[patternBack], flyIntensity);
                 Thread.Sleep(flyPause);
@@ -220,8 +220,10 @@ namespace MyBhapticsTactsuit
             var rotationFront = new RotationOption(0f, 0f);
             string postfix = "_L";
             if (isRightHand) { postfix = "_R"; }
-            string keyArm = "Sword" + postfix;
-            string keyVest = "SwordVest" + postfix;
+            string keyHand = "RecoilHands" + postfix;
+            string keyArm = "RecoilArms" + postfix;
+            string keyVest = "RecoilBladeVest" + postfix;
+            hapticPlayer.SubmitRegisteredVestRotation(keyHand, keyHand, rotationFront, scaleOption);
             hapticPlayer.SubmitRegisteredVestRotation(keyArm, keyArm, rotationFront, scaleOption);
             hapticPlayer.SubmitRegisteredVestRotation(keyVest, keyVest, rotationFront, scaleOption);
         }

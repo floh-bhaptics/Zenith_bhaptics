@@ -51,6 +51,18 @@
       <HintPath>D:\Games\Oculus\Software\ramen-vr-zenith\BepInEx\plugins\Bhaptics.Tact.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Improbable.Gdk.Core">
+      <HintPath>D:\Games\Oculus\Software\ramen-vr-zenith\BepInEx\unhollowed\Improbable.Gdk.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Improbable.Gdk.Generated">
+      <HintPath>D:\Games\Oculus\Software\ramen-vr-zenith\BepInEx\unhollowed\Improbable.Gdk.Generated.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RGB">
+      <HintPath>D:\Games\Oculus\Software\ramen-vr-zenith\BepInEx\unhollowed\RGB.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -69,6 +81,10 @@
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
       <HintPath>D:\Games\Oculus\Software\ramen-vr-zenith\BepInEx\unhollowed\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.XRModule">
+      <HintPath>D:\Games\Oculus\Software\ramen-vr-zenith\BepInEx\unhollowed\UnityEngine.XRModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Zenith">
@@ -123,6 +139,7 @@
     <None Include="Patterns\Holster_L.tact" />
     <None Include="Patterns\Holster_R.tact" />
     <None Include="Patterns\Impact.tact" />
+    <None Include="Patterns\LevelUp.tact" />
     <None Include="Patterns\RecoilArms_L.tact" />
     <None Include="Patterns\RecoilArms_R.tact" />
     <None Include="Patterns\RecoilBladeVest_L.tact" />

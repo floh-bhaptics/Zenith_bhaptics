@@ -208,6 +208,9 @@
   <data name="Impact" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Patterns\Impact.tact;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="LevelUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Patterns\LevelUp.tact;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="RecoilArms_L" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Patterns\RecoilArms_L.tact;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
