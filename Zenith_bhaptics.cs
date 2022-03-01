@@ -47,6 +47,16 @@ namespace Zenith_bhaptics
             }
         }
 
+        [HarmonyPatch(typeof(Zenith.Locomotion.ZenithGlidingProvider), "HandleGliding", new Type[] { })]
+        public class HandleGliding
+        {
+            public static void Postfix(Zenith.Locomotion.ZenithGlidingProvider __instance)
+            {
+                tactsuitVr.updateGlideSpeed(__instance.velocity.magnitude);
+            }
+        }
+
+
         [HarmonyPatch(typeof(Zenith.Locomotion.ZenithGlidingProvider), "EndGliding", new Type[] { })]
         public class EndGliding
         {
@@ -73,6 +83,18 @@ namespace Zenith_bhaptics
                 tactsuitVr.PlaybackHaptics("Eating");
             }
         }
+
+        [HarmonyPatch(typeof(BNG.GrappleShot), "shootGrapple", new Type[] {  })]
+        public class ShootGrapple
+        {
+            public static void Postfix(BNG.GrappleShot __instance)
+            {
+                bool isRight = (__instance.thisGrabber.HandSide == BNG.ControllerHand.Right);
+                tactsuitVr.SwordRecoil(isRight);
+                //tactsuitVr.LOG("Grapple shot");
+            }
+        }
+
 
         #endregion
 
@@ -126,8 +148,41 @@ namespace Zenith_bhaptics
         {
             public static void Postfix(SpellGestureActivationManager __instance, UnityEngine.XR.XRNode hand)
             {
+                if (!__instance.enabled) return;
                 bool isRight = (hand == UnityEngine.XR.XRNode.RightHand);
                 tactsuitVr.Spell(isRight);
+            }
+        }
+
+        [HarmonyPatch(typeof(BNG.RaycastWeapon), "Shoot", new Type[] {  })]
+        public class ShootRayCast
+        {
+            public static void Postfix(BNG.RaycastWeapon __instance)
+            {
+                bool isRight = (__instance.thisGrabber.HandSide == BNG.ControllerHand.Right);
+                tactsuitVr.ShootRecoil(isRight);
+            }
+        }
+
+        [HarmonyPatch(typeof(ElementalWeaponProjectileLauncher), "Shoot", new Type[] { })]
+        public class ShootProjectile3
+        {
+            public static void Postfix(ElementalWeaponProjectileLauncher __instance)
+            {
+                bool isRight = (!__instance.grabbable.grabbedByLeft);                
+                tactsuitVr.ShootRecoil(isRight);
+            }
+        }
+
+
+        [HarmonyPatch(typeof(BNG.Arrow), "ShootArrow", new Type[] { typeof(Vector3) })]
+        public class ShootArrow
+        {
+            public static void Postfix(BNG.Arrow __instance)
+            {
+                tactsuitVr.PlaybackHaptics("RecoilArms_L", 0.5f);
+                tactsuitVr.PlaybackHaptics("RecoilArms_R", 0.5f);
+                //tactsuitVr.LOG("Bow shot");
             }
         }
 
@@ -161,7 +216,7 @@ namespace Zenith_bhaptics
             // and the torso ends at roughly -0.5 (that's in meters)
             // so cap the shift to [-0.5, 0]...
             float hitShift = hitPosition.y;
-            tactsuitVr.LOG("HitShift: " + hitShift.ToString());
+            //tactsuitVr.LOG("HitShift: " + hitShift.ToString());
             float upperBound = 1.7f;
             float lowerBound = 0.8f;
             if (hitShift > upperBound) { hitShift = 0.5f; }
@@ -183,9 +238,10 @@ namespace Zenith_bhaptics
             public static void Postfix(CombatSystem __instance, Zenith.Combat.CombatHittableCollider hittable, Vector3 position, CombatHitType types, string itemInstanceId, string attackingObjectId, CombatAttackData __result)
             {
                 if (!__instance.tempIsEnemy) return;
-                if (types == CombatHitType.PLAYER_ORIGINATED) return;
-                if (types == CombatHitType.NONE) return;
+                tactsuitVr.LOG("Hit: " + types.ToString());
                 string feedBack = "Impact";
+                //if (types == CombatHitType.PLAYER_ORIGINATED) return;
+                if (types == CombatHitType.NONE) feedBack = "Impact";
                 if (types == CombatHitType.MELEE) feedBack = "BladeHit";
                 if (types == CombatHitType.RANGED) feedBack = "BulletHit";
                 var angleShift = getAngleAndShift(__instance.transform, position);

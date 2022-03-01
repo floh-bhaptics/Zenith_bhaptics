@@ -22,6 +22,8 @@ namespace MyBhapticsTactsuit
     {
         public bool suitDisabled = true;
         public bool systemInitialized = false;
+        public static float glideIntensity = 0.8f;
+        public static int glidePause = 300;
         // Event to start and stop the heartbeat thread
         private static ManualResetEvent HeartBeat_mrse = new ManualResetEvent(false);
         private static ManualResetEvent Gliding_mrse = new ManualResetEvent(false);
@@ -62,12 +64,18 @@ namespace MyBhapticsTactsuit
                 Gliding_mrse.WaitOne();
                 patternFront = flyRandom.Next(FlyingFront.Count);
                 patternBack = flyRandom.Next(FlyingBack.Count);
-                flyPause = flyRandom.Next(300);
-                flyIntensity = (float)flyRandom.NextDouble() * 0.8f;
+                flyPause = flyRandom.Next(glidePause);
+                flyIntensity = (float)flyRandom.NextDouble() * glideIntensity;
                 PlaybackHaptics(FlyingFront[patternFront], flyIntensity);
                 PlaybackHaptics(FlyingBack[patternBack], flyIntensity);
                 Thread.Sleep(flyPause);
             }
+        }
+
+        public void updateGlideSpeed(float speed)
+        {
+            glideIntensity = (speed / 20.0f);
+            glidePause = (int)(500 * (1.0 - (speed / 20.0f)));
         }
 
         public TactsuitVR()
@@ -178,6 +186,7 @@ namespace MyBhapticsTactsuit
 
         public void Spell(bool isRightHand)
         {
+            if (suitDisabled) { return; }
             // weaponName is a parameter that will go into the vest feedback pattern name
             // isRightHand is just which side the feedback is on
             // intensity should usually be between 0 and 1
@@ -203,7 +212,7 @@ namespace MyBhapticsTactsuit
             hapticPlayer.SubmitRegisteredVestRotation(keyVest, keyVest, rotationFront, scaleOption);
         }
 
-        public void SwordRecoil(bool isRightHand, float intensity = 1.0f)
+        public void SwordRecoil(bool isRightHand, float intensity = 0.7f)
         {
             // Melee feedback pattern
             if (suitDisabled) { return; }
@@ -219,6 +228,24 @@ namespace MyBhapticsTactsuit
             hapticPlayer.SubmitRegisteredVestRotation(keyArm, keyArm, rotationFront, scaleOption);
             hapticPlayer.SubmitRegisteredVestRotation(keyVest, keyVest, rotationFront, scaleOption);
         }
+
+        public void ShootRecoil(bool isRightHand, float intensity = 0.7f)
+        {
+            // Melee feedback pattern
+            if (suitDisabled) { return; }
+            float duration = 1.0f;
+            var scaleOption = new ScaleOption(intensity, duration);
+            var rotationFront = new RotationOption(0f, 0f);
+            string postfix = "_L";
+            if (isRightHand) { postfix = "_R"; }
+            string keyHand = "RecoilHands" + postfix;
+            string keyArm = "RecoilArms" + postfix;
+            string keyVest = "RecoilGunVest" + postfix;
+            hapticPlayer.SubmitRegisteredVestRotation(keyHand, keyHand, rotationFront, scaleOption);
+            hapticPlayer.SubmitRegisteredVestRotation(keyArm, keyArm, rotationFront, scaleOption);
+            hapticPlayer.SubmitRegisteredVestRotation(keyVest, keyVest, rotationFront, scaleOption);
+        }
+
 
         public void HeadShot(float hitAngle)
         {

@@ -229,6 +229,12 @@
   <data name="RecoilBowVest_R" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Patterns\RecoilBowVest_R.tact;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="RecoilGunVest_L" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Patterns\RecoilGunVest_L.tact;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="RecoilGunVest_R" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Patterns\RecoilGunVest_R.tact;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="RecoilHands_L" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Patterns\RecoilHands_L.tact;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

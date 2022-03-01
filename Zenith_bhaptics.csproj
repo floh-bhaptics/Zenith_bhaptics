@@ -48,8 +48,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Bhaptics.Tact">
-      <HintPath>D:\Games\Oculus\Software\ramen-vr-zenith\BepInEx\plugins\Bhaptics.Tact.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>libs\Bhaptics.Tact.dll</HintPath>
     </Reference>
     <Reference Include="Improbable.Gdk.Core">
       <HintPath>D:\Games\Oculus\Software\ramen-vr-zenith\BepInEx\unhollowed\Improbable.Gdk.Core.dll</HintPath>
@@ -146,6 +145,8 @@
     <None Include="Patterns\RecoilBladeVest_R.tact" />
     <None Include="Patterns\RecoilBowVest_L.tact" />
     <None Include="Patterns\RecoilBowVest_R.tact" />
+    <None Include="Patterns\RecoilGunVest_L.tact" />
+    <None Include="Patterns\RecoilGunVest_R.tact" />
     <None Include="Patterns\RecoilHands_L.tact" />
     <None Include="Patterns\RecoilHands_R.tact" />
     <None Include="Patterns\SpellArm_L.tact" />
