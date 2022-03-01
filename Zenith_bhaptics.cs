@@ -113,6 +113,15 @@ namespace Zenith_bhaptics
         }
 
         [HarmonyPatch(typeof(PlayerCharacterHealthSystem), "OnDeath", new Type[] {  })]
+        public class PlayerCharacterDeath
+        {
+            public static void Postfix()
+            {
+                tactsuitVr.StopThreads();
+            }
+        }
+
+        [HarmonyPatch(typeof(HealthSystem), "OnDeath", new Type[] { })]
         public class PlayerDeath
         {
             public static void Postfix()
@@ -165,11 +174,13 @@ namespace Zenith_bhaptics
         }
 
         [HarmonyPatch(typeof(ElementalWeaponProjectileLauncher), "Shoot", new Type[] { })]
-        public class ShootProjectile3
+        public class ShootProjectile
         {
             public static void Postfix(ElementalWeaponProjectileLauncher __instance)
             {
-                bool isRight = (!__instance.grabbable.grabbedByLeft);                
+                bool isRight = true;
+                try { isRight = (!__instance.grabbable.grabbedByLeft); }
+                catch (Exception) { return; }
                 tactsuitVr.ShootRecoil(isRight);
             }
         }
@@ -238,7 +249,8 @@ namespace Zenith_bhaptics
             public static void Postfix(CombatSystem __instance, Zenith.Combat.CombatHittableCollider hittable, Vector3 position, CombatHitType types, string itemInstanceId, string attackingObjectId, CombatAttackData __result)
             {
                 if (!__instance.tempIsEnemy) return;
-                tactsuitVr.LOG("Hit: " + types.ToString());
+                if (__result.Blocked) { tactsuitVr.PlaybackHaptics("Block"); return; }
+                //tactsuitVr.LOG("Hit: " + types.ToString());
                 string feedBack = "Impact";
                 //if (types == CombatHitType.PLAYER_ORIGINATED) return;
                 if (types == CombatHitType.NONE) feedBack = "Impact";

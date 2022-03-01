@@ -121,6 +121,9 @@
   <data name="BladeHit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Patterns\BladeHit.tact;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Block" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Patterns\Block.tact;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="BulletHit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Patterns\BulletHit.tact;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

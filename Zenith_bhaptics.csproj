@@ -109,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Patterns\BladeHit.tact" />
+    <None Include="Patterns\Block.tact" />
     <None Include="Patterns\BulletHit.tact" />
     <None Include="Patterns\Eating.tact" />
     <None Include="Patterns\ExplosionBelly.tact" />
