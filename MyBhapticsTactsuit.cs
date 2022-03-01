@@ -176,38 +176,30 @@ namespace MyBhapticsTactsuit
             hapticPlayer.SubmitRegisteredVestRotation(key, key, rotationOption, scaleOption);
         }
 
-        public void GunRecoil(bool isRightHand, string recoilPrefix, float intensity = 1.0f, bool twoHanded=false, bool shoulderStock=false )
+        public void Spell(bool isRightHand)
         {
-            if (suitDisabled) { return; }
-            float duration = 1.0f;
-            var scaleOption = new ScaleOption(intensity, duration);
-            var rotationFront = new RotationOption(0f, 0f);
+            // weaponName is a parameter that will go into the vest feedback pattern name
+            // isRightHand is just which side the feedback is on
+            // intensity should usually be between 0 and 1
 
-            // assemble the name of the feedback pattern, first left and right
-            string prefix = "Recoil";
+            float duration = 1.0f;
+            float intensity = 1.0f;
+            var scaleOption = new ScaleOption(intensity, duration);
+            // the function needs some rotation if you want to give the scale option as well
+            var rotationFront = new RotationOption(0f, 0f);
+            // make postfix according to parameter
             string postfix = "_L";
-            string otherPostfix = "_R";
-            if (isRightHand) { postfix = "_R"; otherPostfix = "_L"; }
-            // add gun type to the pattern name
-            prefix += recoilPrefix;
-            // hands and arms patterns are the same, no matter if stock pressed against the shoulder
-            string keyHand = prefix + "Hands" + postfix;
-            string keyArm = prefix + "Arms" + postfix;
-            string keyOtherArm = prefix + "Arms" + otherPostfix;
-            string keyOtherHand = prefix + "Hands" + otherPostfix;
-            // change vest pattern if stock is against shoulder
-            if (shoulderStock) { prefix += "Shoulder"; }
-            string keyVest = prefix + "Vest" + postfix;
-            // always play back dominant arm and hand patterns
+            if (isRightHand) { postfix = "_R"; }
+
+            // stitch together pattern names for Arm and Hand recoil
+            string keyHands = "SpellHand" + postfix;
+            string keyArm = "SpellArm" + postfix;
+            // vest pattern name contains the weapon name. This way, you can quickly switch
+            // between swords, pistols, shotguns, ... by just changing the shoulder feedback
+            // and scaling via the intensity for arms and hands
+            string keyVest = "SpellVest" + postfix;
+            hapticPlayer.SubmitRegisteredVestRotation(keyHands, keyHands, rotationFront, scaleOption);
             hapticPlayer.SubmitRegisteredVestRotation(keyArm, keyArm, rotationFront, scaleOption);
-            hapticPlayer.SubmitRegisteredVestRotation(keyHand, keyHand, rotationFront, scaleOption);
-            // second hand/arm only if it grabs the gun
-            if (twoHanded)
-            {
-                hapticPlayer.SubmitRegisteredVestRotation(keyOtherArm, keyOtherArm, rotationFront, scaleOption);
-                hapticPlayer.SubmitRegisteredVestRotation(keyOtherHand, keyOtherHand, rotationFront, scaleOption);
-            }
-            // play back vest pattern
             hapticPlayer.SubmitRegisteredVestRotation(keyVest, keyVest, rotationFront, scaleOption);
         }
 

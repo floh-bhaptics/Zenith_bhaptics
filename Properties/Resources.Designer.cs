@@ -410,5 +410,59 @@ namespace Zenith_bhaptics.Properties {
                 return ResourceManager.GetString("RecoilHands_R", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {&quot;project&quot;:{&quot;createdAt&quot;:1641200606200,&quot;description&quot;:&quot;&quot;,&quot;id&quot;:&quot;&quot;,&quot;layout&quot;:{&quot;layouts&quot;:{&quot;ForearmL&quot;:[{&quot;index&quot;:0,&quot;x&quot;:0,&quot;y&quot;:0},{&quot;index&quot;:1,&quot;x&quot;:0.5,&quot;y&quot;:0},{&quot;index&quot;:2,&quot;x&quot;:1,&quot;y&quot;:0},{&quot;index&quot;:3,&quot;x&quot;:0,&quot;y&quot;:1},{&quot;index&quot;:4,&quot;x&quot;:0.5,&quot;y&quot;:1},{&quot;index&quot;:5,&quot;x&quot;:1,&quot;y&quot;:1}],&quot;ForearmR&quot;:[{&quot;index&quot;:0,&quot;x&quot;:0,&quot;y&quot;:0},{&quot;index&quot;:1,&quot;x&quot;:0.5,&quot;y&quot;:0},{&quot;index&quot;:2,&quot;x&quot;:1,&quot;y&quot;:0},{&quot;index&quot;:3,&quot;x&quot;:0,&quot;y&quot;:1},{&quot;index&quot;:4,&quot;x&quot;:0.5,&quot;y&quot;:1},{&quot;index&quot;:5,&quot;x&quot;:1,&quot;y&quot;:1}]},&quot;name&quot;:&quot;Tactosy2&quot;,&quot;type&quot;:&quot;Tactosy2&quot;},&quot;mediaFileDuration&quot;:1,&quot;name&quot;:&quot;SpellShootArm_L&quot;,... ähnelt.
+        /// </summary>
+        internal static string SpellArm_L {
+            get {
+                return ResourceManager.GetString("SpellArm_L", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {&quot;project&quot;:{&quot;createdAt&quot;:1641200480668,&quot;description&quot;:&quot;&quot;,&quot;layout&quot;:{&quot;layouts&quot;:{&quot;ForearmL&quot;:[{&quot;index&quot;:0,&quot;x&quot;:0,&quot;y&quot;:0},{&quot;index&quot;:1,&quot;x&quot;:0.5,&quot;y&quot;:0},{&quot;index&quot;:2,&quot;x&quot;:1,&quot;y&quot;:0},{&quot;index&quot;:3,&quot;x&quot;:0,&quot;y&quot;:1},{&quot;index&quot;:4,&quot;x&quot;:0.5,&quot;y&quot;:1},{&quot;index&quot;:5,&quot;x&quot;:1,&quot;y&quot;:1}],&quot;ForearmR&quot;:[{&quot;index&quot;:0,&quot;x&quot;:0,&quot;y&quot;:0},{&quot;index&quot;:1,&quot;x&quot;:0.5,&quot;y&quot;:0},{&quot;index&quot;:2,&quot;x&quot;:1,&quot;y&quot;:0},{&quot;index&quot;:3,&quot;x&quot;:0,&quot;y&quot;:1},{&quot;index&quot;:4,&quot;x&quot;:0.5,&quot;y&quot;:1},{&quot;index&quot;:5,&quot;x&quot;:1,&quot;y&quot;:1}]},&quot;name&quot;:&quot;Tactosy2&quot;,&quot;type&quot;:&quot;Tactosy2&quot;},&quot;mediaFileDuration&quot;:1,&quot;name&quot;:&quot;SpellShootArm_R&quot;,&quot;tracks&quot;:[{&quot;e... ähnelt.
+        /// </summary>
+        internal static string SpellArm_R {
+            get {
+                return ResourceManager.GetString("SpellArm_R", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {&quot;project&quot;:{&quot;createdAt&quot;:1641200852041,&quot;description&quot;:&quot;&quot;,&quot;id&quot;:&quot;&quot;,&quot;layout&quot;:{&quot;layouts&quot;:{&quot;HandL&quot;:[{&quot;index&quot;:0,&quot;x&quot;:0.5,&quot;y&quot;:0},{&quot;index&quot;:1,&quot;x&quot;:0.5,&quot;y&quot;:0.5},{&quot;index&quot;:2,&quot;x&quot;:0.5,&quot;y&quot;:1}],&quot;HandR&quot;:[{&quot;index&quot;:0,&quot;x&quot;:0.5,&quot;y&quot;:0},{&quot;index&quot;:1,&quot;x&quot;:0.5,&quot;y&quot;:0.5},{&quot;index&quot;:2,&quot;x&quot;:0.5,&quot;y&quot;:1}]},&quot;name&quot;:&quot;TactosyH&quot;,&quot;type&quot;:&quot;Hand&quot;},&quot;mediaFileDuration&quot;:1,&quot;name&quot;:&quot;SpellShootHand_L&quot;,&quot;tracks&quot;:[{&quot;effects&quot;:[{&quot;modes&quot;:{&quot;HandL&quot;:{&quot;dotMode&quot;:{&quot;dotConnected&quot;:false,&quot;feedback&quot;:[]},&quot;mode&quot;:&quot;PATH_MODE&quot;,&quot;pathMode&quot;:{&quot;feedback&quot;:[]}},&quot;HandR&quot;:{&quot;dotMode&quot;:{&quot;dotConnect [Rest der Zeichenfolge ... ähnelt.
+        /// </summary>
+        internal static string SpellHand_L {
+            get {
+                return ResourceManager.GetString("SpellHand_L", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {&quot;project&quot;:{&quot;createdAt&quot;:1641200697466,&quot;description&quot;:&quot;&quot;,&quot;layout&quot;:{&quot;layouts&quot;:{&quot;HandL&quot;:[{&quot;index&quot;:0,&quot;x&quot;:0.5,&quot;y&quot;:0},{&quot;index&quot;:1,&quot;x&quot;:0.5,&quot;y&quot;:0.5},{&quot;index&quot;:2,&quot;x&quot;:0.5,&quot;y&quot;:1}],&quot;HandR&quot;:[{&quot;index&quot;:0,&quot;x&quot;:0.5,&quot;y&quot;:0},{&quot;index&quot;:1,&quot;x&quot;:0.5,&quot;y&quot;:0.5},{&quot;index&quot;:2,&quot;x&quot;:0.5,&quot;y&quot;:1}]},&quot;name&quot;:&quot;TactosyH&quot;,&quot;type&quot;:&quot;Hand&quot;},&quot;mediaFileDuration&quot;:1,&quot;name&quot;:&quot;SpellShootHand_R&quot;,&quot;tracks&quot;:[{&quot;effects&quot;:[{&quot;modes&quot;:{&quot;HandL&quot;:{&quot;dotMode&quot;:{&quot;dotConnected&quot;:false,&quot;feedback&quot;:[]},&quot;mode&quot;:&quot;PATH_MODE&quot;,&quot;pathMode&quot;:{&quot;feedback&quot;:[]}},&quot;HandR&quot;:{&quot;dotMode&quot;:{&quot;dotConnected&quot;:fals [Rest der Zeichenfolge wurde abgeschni... ähnelt.
+        /// </summary>
+        internal static string SpellHand_R {
+            get {
+                return ResourceManager.GetString("SpellHand_R", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {&quot;project&quot;:{&quot;createdAt&quot;:1641200375582,&quot;description&quot;:&quot;&quot;,&quot;id&quot;:&quot;&quot;,&quot;layout&quot;:{&quot;layouts&quot;:{&quot;VestBack&quot;:[{&quot;index&quot;:0,&quot;x&quot;:0,&quot;y&quot;:0},{&quot;index&quot;:1,&quot;x&quot;:0.333,&quot;y&quot;:0},{&quot;index&quot;:2,&quot;x&quot;:0.667,&quot;y&quot;:0},{&quot;index&quot;:3,&quot;x&quot;:1,&quot;y&quot;:0},{&quot;index&quot;:4,&quot;x&quot;:0,&quot;y&quot;:0.25},{&quot;index&quot;:5,&quot;x&quot;:0.333,&quot;y&quot;:0.25},{&quot;index&quot;:6,&quot;x&quot;:0.667,&quot;y&quot;:0.25},{&quot;index&quot;:7,&quot;x&quot;:1,&quot;y&quot;:0.25},{&quot;index&quot;:8,&quot;x&quot;:0,&quot;y&quot;:0.5},{&quot;index&quot;:9,&quot;x&quot;:0.333,&quot;y&quot;:0.5},{&quot;index&quot;:10,&quot;x&quot;:0.667,&quot;y&quot;:0.5},{&quot;index&quot;:11,&quot;x&quot;:1,&quot;y&quot;:0.5},{&quot;index&quot;:12,&quot;x&quot;:0,&quot;y&quot;:0.75},{&quot;index&quot;:13,&quot;x&quot;:0.333,&quot;y&quot;:0.75},{&quot;index&quot;:14... ähnelt.
+        /// </summary>
+        internal static string SpellVest_L {
+            get {
+                return ResourceManager.GetString("SpellVest_L", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {&quot;project&quot;:{&quot;createdAt&quot;:1641199897212,&quot;description&quot;:&quot;&quot;,&quot;layout&quot;:{&quot;layouts&quot;:{&quot;VestBack&quot;:[{&quot;index&quot;:0,&quot;x&quot;:0,&quot;y&quot;:0},{&quot;index&quot;:1,&quot;x&quot;:0.333,&quot;y&quot;:0},{&quot;index&quot;:2,&quot;x&quot;:0.667,&quot;y&quot;:0},{&quot;index&quot;:3,&quot;x&quot;:1,&quot;y&quot;:0},{&quot;index&quot;:4,&quot;x&quot;:0,&quot;y&quot;:0.25},{&quot;index&quot;:5,&quot;x&quot;:0.333,&quot;y&quot;:0.25},{&quot;index&quot;:6,&quot;x&quot;:0.667,&quot;y&quot;:0.25},{&quot;index&quot;:7,&quot;x&quot;:1,&quot;y&quot;:0.25},{&quot;index&quot;:8,&quot;x&quot;:0,&quot;y&quot;:0.5},{&quot;index&quot;:9,&quot;x&quot;:0.333,&quot;y&quot;:0.5},{&quot;index&quot;:10,&quot;x&quot;:0.667,&quot;y&quot;:0.5},{&quot;index&quot;:11,&quot;x&quot;:1,&quot;y&quot;:0.5},{&quot;index&quot;:12,&quot;x&quot;:0,&quot;y&quot;:0.75},{&quot;index&quot;:13,&quot;x&quot;:0.333,&quot;y&quot;:0.75},{&quot;index&quot;:14,&quot;x&quot;:0.667,&quot;y... ähnelt.
+        /// </summary>
+        internal static string SpellVest_R {
+            get {
+                return ResourceManager.GetString("SpellVest_R", resourceCulture);
+            }
+        }
     }
 }

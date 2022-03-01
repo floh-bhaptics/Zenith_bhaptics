@@ -121,6 +121,17 @@ namespace Zenith_bhaptics
             }
         }
 
+        [HarmonyPatch(typeof(SpellGestureActivationManager), "EndGesture", new Type[] { typeof(UnityEngine.XR.XRNode) })]
+        public class CastSpell
+        {
+            public static void Postfix(SpellGestureActivationManager __instance, UnityEngine.XR.XRNode hand)
+            {
+                bool isRight = (hand == UnityEngine.XR.XRNode.RightHand);
+                tactsuitVr.Spell(isRight);
+            }
+        }
+
+
         private static KeyValuePair<float, float> getAngleAndShift(Transform player, Vector3 hit)
         {
             // bhaptics pattern starts in the front, then rotates to the left. 0° is front, 90° is left, 270° is right.

@@ -148,6 +148,12 @@
     <None Include="Patterns\RecoilBowVest_R.tact" />
     <None Include="Patterns\RecoilHands_L.tact" />
     <None Include="Patterns\RecoilHands_R.tact" />
+    <None Include="Patterns\SpellArm_L.tact" />
+    <None Include="Patterns\SpellArm_R.tact" />
+    <None Include="Patterns\SpellHand_L.tact" />
+    <None Include="Patterns\SpellHand_R.tact" />
+    <None Include="Patterns\SpellVest_L.tact" />
+    <None Include="Patterns\SpellVest_R.tact" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
