@@ -130,7 +130,26 @@ namespace Zenith_bhaptics
             }
         }
 
+        [HarmonyPatch(typeof(Zenith.Instancing.InstanceRespawnSystem), "OnPlayerDeath", new Type[] { typeof(ServerPlayerInstance) })]
+        public class ServerPlayerDeath
+        {
+            public static void Postfix()
+            {
+                tactsuitVr.StopThreads();
+            }
+        }
+
+        [HarmonyPatch(typeof(Zenith.Instancing.InstanceRespawnSystem), "RespawnPlayer", new Type[] { typeof(ServerPlayerInstance), typeof(Vector3) })]
+        public class ServerPlayerRespawn
+        {
+            public static void Postfix()
+            {
+                tactsuitVr.StopThreads();
+            }
+        }
+        
         #endregion
+
 
         #region Combat
 

@@ -75,7 +75,7 @@ namespace MyBhapticsTactsuit
         public void updateGlideSpeed(float speed)
         {
             glideIntensity = (speed / 20.0f);
-            glidePause = (int)(500 * (1.0 - (speed / 20.0f)));
+            glidePause = Math.Max( (int)(500 * (1.0 - (speed / 20.0f))), 0) + 30;
         }
 
         public TactsuitVR()
