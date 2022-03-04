@@ -13,7 +13,7 @@ If you have any questions or comments, ping me (Florian) in the bhaptics Discord
 
 ## Automated Installation
 
-Get the Setup Catch file from [the latest release here](https://github.com/floh-bhaptics/Zenith_bhaptics/releases/latest/download/Install_Zenith_bhaptics.bat).
+Get the Setup Batch file from [the latest release here](https://github.com/floh-bhaptics/Zenith_bhaptics/releases/latest/download/Install_Zenith_bhaptics.bat).
 Save it into your Zenith main folder and execute (double click) it. Windows Defender will warn you that it does not know the publisher, and you will have to
 click on "More info..." to pick "Run anyway". If you aren't sure what the file does, you can open it in a text editor. It will download the Zenith modding
 tool, the mod loader (BepInEx) and my mod from GitHub and unzip them into the current directory.
