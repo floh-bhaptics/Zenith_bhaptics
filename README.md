@@ -1,5 +1,5 @@
 # Zenith_bhaptics
-Basic bHaptics support for Zenith
+Basic bHaptics support for Zenith.
 
 ## Warning
 
@@ -22,7 +22,9 @@ Afterwards, you will have a "ZenithModding.exe" file in your main game folder. R
 quite a while because the modding tool will do its magic, and Zenith might not even start. If the command Window closes and nothing happens, just
 run the executable again and it should work.
 
-That's it. You can still play unmodded Zenith by starting it "the normal way" and not via the "ZenithModding.exe".
+That's it. You can still play unmodded Zenith by starting it "the normal way" and not via the "ZenithModding.exe". Sometimes the anti-cheat circumvention doesn't
+load properly and the mod won't start up. Just quit right out of the game and start it again, the second time always worked for me so far. That's why there is
+a single startup heartbeat, so you know it's working. :-)
 
 ## Manual installation
 
