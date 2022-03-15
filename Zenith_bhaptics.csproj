@@ -35,9 +35,8 @@
       <HintPath>D:\Games\Oculus\Software\ramen-vr-zenith\BepInEx\core\0Harmony.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>D:\Games\Oculus\Software\ramen-vr-zenith\BepInEx\unhollowed\Assembly-CSharp.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="BehaviorDesigner.Runtime">
+      <HintPath>libs\BehaviorDesigner.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx.Core">
       <HintPath>D:\Games\Oculus\Software\ramen-vr-zenith\BepInEx\core\BepInEx.Core.dll</HintPath>
@@ -49,6 +48,10 @@
     </Reference>
     <Reference Include="Bhaptics.Tact">
       <HintPath>libs\Bhaptics.Tact.dll</HintPath>
+    </Reference>
+    <Reference Include="FMODUnity">
+      <HintPath>libs\FMODUnity.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Improbable.Gdk.Core">
       <HintPath>D:\Games\Oculus\Software\ramen-vr-zenith\BepInEx\unhollowed\Improbable.Gdk.Core.dll</HintPath>
@@ -88,6 +91,10 @@
     </Reference>
     <Reference Include="Zenith">
       <HintPath>D:\Games\Oculus\Software\ramen-vr-zenith\BepInEx\unhollowed\Zenith.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Zenith.ThirdParty">
+      <HintPath>D:\Games\Oculus\Software\ramen-vr-zenith\BepInEx\unhollowed\Zenith.ThirdParty.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>

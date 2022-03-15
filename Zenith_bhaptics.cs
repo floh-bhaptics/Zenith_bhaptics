@@ -16,7 +16,7 @@ using Zenith;
 
 namespace Zenith_bhaptics
 {
-    [BepInPlugin("org.bepinex.plugins.Zenith_bhaptics", "Zenith bhaptics integration", "1.0.0")]
+    [BepInPlugin("org.bepinex.plugins.Zenith_bhaptics", "Zenith bhaptics integration", "1.1.0")]
     public class Plugin : BepInEx.IL2CPP.BasePlugin
     {
 #pragma warning disable CS0109 // Remove unnecessary warning
@@ -37,7 +37,7 @@ namespace Zenith_bhaptics
         }
 
         #region World Interaction
-
+        
         [HarmonyPatch(typeof(Zenith.Locomotion.ZenithGlidingProvider), "BeginGliding", new Type[] { })]
         public class StartGliding
         {
@@ -74,7 +74,8 @@ namespace Zenith_bhaptics
                 tactsuitVr.PlaybackHaptics("LevelUp");
             }
         }
-
+        
+        
         [HarmonyPatch(typeof(Zenith.Cooking.Food), "Eat", new Type[] { })]
         public class PlayerEating
         {
@@ -94,12 +95,12 @@ namespace Zenith_bhaptics
                 //tactsuitVr.LOG("Grapple shot");
             }
         }
-
+        
 
         #endregion
 
         #region Health
-
+        
         [HarmonyPatch(typeof(Zenith.UI.ZenithVignetteManager), "OnHealthChanged", new Type[] { typeof(int) })]
         public class PlayerHealthChanged
         {
@@ -111,7 +112,8 @@ namespace Zenith_bhaptics
                 else tactsuitVr.StopHeartBeat();
             }
         }
-
+        
+        
         [HarmonyPatch(typeof(PlayerCharacterHealthSystem), "OnDeath", new Type[] {  })]
         public class PlayerCharacterDeath
         {
@@ -152,7 +154,7 @@ namespace Zenith_bhaptics
 
 
         #region Combat
-
+        
         [HarmonyPatch(typeof(Zenith.Combat.MeleeWeapon), "HitHittable", new Type[] { typeof(Zenith.Combat.CombatHittableCollider) })]
         public class MeleeHitHittable
         {
@@ -170,7 +172,8 @@ namespace Zenith_bhaptics
                 tactsuitVr.SwordRecoil(isRight);
             }
         }
-
+        
+        
         [HarmonyPatch(typeof(SpellGestureActivationManager), "EndGesture", new Type[] { typeof(UnityEngine.XR.XRNode) })]
         public class CastSpell
         {
@@ -191,7 +194,7 @@ namespace Zenith_bhaptics
                 tactsuitVr.ShootRecoil(isRight);
             }
         }
-
+        
         [HarmonyPatch(typeof(ElementalWeaponProjectileLauncher), "Shoot", new Type[] { })]
         public class ShootProjectile
         {
@@ -204,7 +207,7 @@ namespace Zenith_bhaptics
             }
         }
 
-
+        
         [HarmonyPatch(typeof(BNG.Arrow), "ShootArrow", new Type[] { typeof(Vector3) })]
         public class ShootArrow
         {
@@ -215,8 +218,8 @@ namespace Zenith_bhaptics
                 //tactsuitVr.LOG("Bow shot");
             }
         }
-
-
+        
+        
         private static KeyValuePair<float, float> getAngleAndShift(Transform player, Vector3 hit)
         {
             // bhaptics pattern starts in the front, then rotates to the left. 0° is front, 90° is left, 270° is right.
@@ -261,12 +264,13 @@ namespace Zenith_bhaptics
             // No tuple returns available in .NET < 4.0, so this is the easiest quickfix
             return new KeyValuePair<float, float>(myRotation, hitShift);
         }
-
+        
         [HarmonyPatch(typeof(CombatSystem), "Attack", new Type[] { typeof(Zenith.Combat.CombatHittableCollider), typeof(float), typeof(string), typeof(CombatHitType), typeof(Vector3), typeof(Vector3), typeof(bool), typeof(bool), typeof(string) })]
         public class PlayerAttack
         {
-            public static void Postfix(CombatSystem __instance, Zenith.Combat.CombatHittableCollider hittable, Vector3 position, CombatHitType types, string itemInstanceId, string attackingObjectId, CombatAttackData __result)
+            public static void Postfix(CombatSystem __instance, Vector3 position, CombatHitType types, CombatAttackData __result)
             {
+                tactsuitVr.LOG("Attack: " + __instance.tempIsEnemy.ToString() + " " + __result.Types.ToString());
                 if (!__instance.tempIsEnemy) return;
                 if (__result.Blocked) { tactsuitVr.PlaybackHaptics("Block"); return; }
                 //tactsuitVr.LOG("Hit: " + types.ToString());
@@ -282,7 +286,7 @@ namespace Zenith_bhaptics
                 //tactsuitVr.PlaybackHaptics(feedBack);
             }
         }
-
+        
         #endregion
 
     }
